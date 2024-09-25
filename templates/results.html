@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Results</h1>
+        <h2>Total Savings: ${{ total_savings | round(2) }}</h2>
+        <h2>Remaining Savings Needed: ${{ remaining_savings_needed | round(2) }}</h2>
+        <h3>Future Savings Predictions</h3>
+        <ul>
+            {% for month, pred in future_predictions %}
+                <li>Month {{ month }}: Predicted Savings: ${{ pred | round(2) }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Z-Scores and Spending Results:</h3>
+        <div id="results-section">
+            {% for result in results %}
+                <h4>Month {{ result.month }}</h4>
+                <img src="data:image/png;base64,{{ result.z_score_plot }}" alt="Z-Score Plot">
+                <ul>
+                    <li>Limits: Essentials: ${{ result.limits['Essentials']|round(2) }}, Leisure: ${{ result.limits['Leisure']|round(2) }}, Miscellaneous: ${{ result.limits['Miscellaneous']|round(2) }}</li>
+                    <li>Actual Spending: Essentials: ${{ result.actuals['Essentials']|round(2) }}, Leisure: ${{ result.actuals['Leisure']|round(2) }}, Miscellaneous: ${{ result.actuals['Miscellaneous']|round(2) }}</li>
+                    <li>Savings: ${{ result.savings | round(2) }}</li>
+                    <li>Total Spending: ${{ result.total_spending | round(2) }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+        <h3>Savings Prediction Graph:</h3>
+        <img src="data:image/png;base64,{{ savings_plot }}" alt="Predicted Savings Plot">
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saving Goal Calculator</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <script>
+        function generateMonthInputs() {
+            const numMonths = document.getElementById('goal_timeframe_months').value;
+            const spendingInputs = document.getElementById('spending-inputs');
+            spendingInputs.innerHTML = '';
+
+            for (let i = 1; i <= numMonths; i++) {
+                spendingInputs.innerHTML += `
+                    <h3>Month ${i}</h3>
+                    <label>Essentials:</label>
+                    <input type="number" name="actual_essentials_${i}" required><br>
+                    <label>Leisure:</label>
+                    <input type="number" name="actual_leisure_${i}" required><br>
+                    <label>Miscellaneous:</label>
+                    <input type="number" name="actual_misc_${i}" required><br>
+                `;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Saving Goal Calculator</h1>
+        <div class="form-section">
+            <form action="/calculate-zscore" method="post">
+                <label for="goal_amount">Total Amount to Save:</label>
+                <input type="number" name="goal_amount" required><br>
+
+                <label for="goal_timeframe_months">Total Months to Save:</label>
+                <input type="number" id="goal_timeframe_months" name="goal_timeframe_months" min="1" required oninput="generateMonthInputs()"><br>
+
+                <label for="monthly_income">Monthly Income:</label>
+                <input type="number" name="monthly_income" required><br>
+
+                <h2>Monthly Actual Spending</h2>
+                <div id="spending-inputs"></div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="results-section" id="results-section">
+            <!-- Results will be injected here after each submission -->
+            <div class="input-graph-container">
+                <div class="inputs">
+                    <!-- Input fields will be here -->
+                </div>
+                <div class="graphs">
+                    <!-- Graphs will be displayed here -->
+                </div>
+            </div>
+
+            <div class="future-outcomes">
+                <h2>Future Savings Prediction</h2>
+                <table>
+                    <tr>
+                        <th>Month</th>
+                        <th>Predicted Savings</th>
+                    </tr>
+                    <!-- Populate with future predictions -->
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
